@@ -1,14 +1,14 @@
-title = 'gym-jsbsim Configuration'
+title = 'configuration'
 
 [simulation]
     jsbsim_dt_hz = 50  # JSBSim integration frequency in Herz
     agent_interaction_freq = 5 # Interaction Frequency in Herz
     aircraft = 'cessna172P'
 
-    path_jsbsim = '/Users/#######/Programme/jsbsim-code' #an System anpassen.
+    path_jsbsim = '' ### lokal definieren
 
     [simulation.initial_state]
-        'ic/h-sl-ft' = 1110
+        'ic/h-sl-ft' = 10000
         'ic/u-fps' = 120
         'ic/terrain-elevation-ft' = 0.00001
         'ic/psi-true-deg' = 270
