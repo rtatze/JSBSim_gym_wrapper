@@ -7,8 +7,6 @@ from _datetime import datetime
 if __name__ == "__main__":
     df = pd.DataFrame(columns=['phi', 'u'])
     #todo: put to toml
-    p_roll = 2.9
-    d_roll = 1.9
 
     def plot(df):
         TOOLTIPS = [
@@ -19,10 +17,18 @@ if __name__ == "__main__":
         p = figure(title="simple line example", x_axis_label='Datapoints', y_axis_label='Data', tooltips=TOOLTIPS)
         p.line(df['phi'].index.values, df['phi'], line_width=2,
                legend_label='phi', name='phi', color="red")
+        p.line(df['theta'].index.values, df['theta'], line_width=2,
+               legend_label='theta', name='theta', color="green")
         p.line(df['u'].index.values, df['u'], line_width=2,
                legend_label='u', name='u', color="blue")
         output_file("plot.html")
         save(p)
+
+
+    p_roll = 2.9
+    d_roll = 1.9
+    p_pitch = -1
+    d_pitch = 0
 
     # innerLoop: heading_roll->Aileron
     def _innerLoopAileron(rollAngle_Reference, rollAngle_Current, rollAngleRateCurrent, AileronCurrent):
@@ -34,7 +40,7 @@ if __name__ == "__main__":
 
     def _innerLoopElevator(pitchAngleReference, pitchAngleCurrent, pitchAngleRateCurrent, elevatorCurrent):
         errorPitchAngle = pitchAngleReference - pitchAngleCurrent
-        elevatorCommand = errorPitchAngle * p_roll - pitchAngleRateCurrent * d_roll
+        elevatorCommand = errorPitchAngle * p_pitch - pitchAngleRateCurrent * d_pitch
         elevatorCommand = elevatorCommand + elevatorCurrent
         elevatorCommand = np.clip(elevatorCommand, -1, 1)
         return elevatorCommand
@@ -49,10 +55,15 @@ if __name__ == "__main__":
         #print(i)
         state = sim.get_state()
         if i%5==0:
-            sim.set_controls('fcs/aileron-cmd-norm',_innerLoopAileron(np.deg2rad(10), state['phi'], state['p'], sim.jsbsim.get_property_value('fcs/aileron-cmd-norm')))
+            sim.set_controls('fcs/aileron-cmd-norm', _innerLoopAileron(np.deg2rad(10), state['phi'], state['p'],
+                                                                       sim.jsbsim.get_property_value(
+                                                                           'fcs/aileron-cmd-norm')))
+            sim.set_controls('fcs/elevator-cmd-norm', _innerLoopElevator(np.deg2rad(7), state['theta'], state['q'],
+                                                                         sim.jsbsim.get_property_value(
+                                                                             'fcs/elevator-cmd-norm')))
         sim.run()
         #print(np.rad2deg(state['phi']))
-        #df = df.append({'u': state['u'], 'phi': np.rad2deg(state['phi'])}, ignore_index=True)
+        df = df.append({'u': state['u'], 'phi': np.rad2deg(state['phi']), 'theta': np.rad2deg(state['theta'])}, ignore_index=True)
 
         i += 1
     after = datetime.now()

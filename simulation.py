@@ -3,6 +3,7 @@ import jsbsim
 from aircraft import Aircraft, cessna172P
 import toml
 init_configuration = toml.load('init_configuration.toml')
+lokal_configuration = toml.load('./lokal_config/lokal_configuration.toml') # included: '/Users/######/Programme/jsbsim-code' #an System anpassen.
 
 class Simulation(object):
     """
@@ -17,7 +18,7 @@ class Simulation(object):
     def __init__(self,
                  sim_frequency_hz: float = init_configuration['simulation']['jsbsim_dt_hz'],
                  aircraft: Aircraft = cessna172P):
-        self.jsbsim = jsbsim.FGFDMExec(init_configuration['simulation']['path_jsbsim'])
+        self.jsbsim = jsbsim.FGFDMExec(lokal_configuration['simulation']['path_jsbsim'])
         self.jsbsim.set_debug_level(0)
         self.sim_dt = 1.0 / sim_frequency_hz
         self.wall_clock_dt = 0
