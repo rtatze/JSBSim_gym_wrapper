@@ -1,7 +1,10 @@
 import time
 import jsbsim
-from aircraft import Aircraft, cessna172P
 import toml
+import sys
+sys.path.append('..')
+sys.path.append('.')
+from core.aircraft import Aircraft, cessna172P
 init_configuration = toml.load('./config/init_configuration.toml')
 lokal_configuration = toml.load('./lokal_config/lokal_configuration.toml') # included: '/Users/######/Programme/jsbsim-code' #an System anpassen.
 
