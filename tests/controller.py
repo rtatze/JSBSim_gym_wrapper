@@ -1,7 +1,7 @@
-from simulation import Simulation
+from core.simulation import Simulation
 import numpy as np
 import pandas as pd
-from bokeh.plotting import figure, output_file, save, show
+from bokeh.plotting import figure, output_file, save
 from _datetime import datetime
 
 if __name__ == "__main__":
@@ -27,8 +27,8 @@ if __name__ == "__main__":
 
     p_roll = 2.9
     d_roll = 1.9
-    p_pitch = -1
-    d_pitch = 0
+    p_pitch = -1.9
+    d_pitch = -2
 
     # innerLoop: heading_roll->Aileron
     def _innerLoopAileron(rollAngle_Reference, rollAngle_Current, rollAngleRateCurrent, AileronCurrent):
@@ -42,23 +42,23 @@ if __name__ == "__main__":
         errorPitchAngle = pitchAngleReference - pitchAngleCurrent
         elevatorCommand = errorPitchAngle * p_pitch - pitchAngleRateCurrent * d_pitch
         elevatorCommand = elevatorCommand + elevatorCurrent
-        elevatorCommand = np.clip(elevatorCommand, -1, 1)
+        elevatorCommand = np.clip(elevatorCommand, -1, 1) - 0.1
         return elevatorCommand
 
     sim = Simulation()
     result = sim.run()
-    sim.set_controls('fcs/throttle-cmd-norm', 1)
+    sim.set_controls('fcs/throttle-cmd-norm', 0)
     i = 0
     state = ""
     before = datetime.now()
-    while result and sim.jsbsim.get_sim_time() <= 300:
+    while result and sim.jsbsim.get_sim_time() <= 50:
         #print(i)
         state = sim.get_state()
         if i%5==0:
             sim.set_controls('fcs/aileron-cmd-norm', _innerLoopAileron(np.deg2rad(10), state['phi'], state['p'],
                                                                        sim.jsbsim.get_property_value(
                                                                            'fcs/aileron-cmd-norm')))
-            sim.set_controls('fcs/elevator-cmd-norm', _innerLoopElevator(np.deg2rad(7), state['theta'], state['q'],
+            sim.set_controls('fcs/elevator-cmd-norm', _innerLoopElevator(np.deg2rad(-7), state['theta'], state['q'],
                                                                          sim.jsbsim.get_property_value(
                                                                              'fcs/elevator-cmd-norm')))
         sim.run()

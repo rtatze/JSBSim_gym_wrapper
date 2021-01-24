@@ -2,7 +2,7 @@ import time
 import jsbsim
 from aircraft import Aircraft, cessna172P
 import toml
-init_configuration = toml.load('init_configuration.toml')
+init_configuration = toml.load('./config/init_configuration.toml')
 lokal_configuration = toml.load('./lokal_config/lokal_configuration.toml') # included: '/Users/######/Programme/jsbsim-code' #an System anpassen.
 
 class Simulation(object):
@@ -13,7 +13,6 @@ class Simulation(object):
     OUTPUT_FILE = 'flightgear.xml'
     LONGITUDINAL = 'longitudinal'
     FULL = 'full'
-    init_configuration = toml.load('init_configuration.toml')
 
     def __init__(self,
                  sim_frequency_hz: float = init_configuration['simulation']['jsbsim_dt_hz'],
@@ -38,6 +37,12 @@ class Simulation(object):
         if init_conditions is not None:
             for prop, value in init_conditions['simulation']['initial_state'].items():
                 self.jsbsim.set_property_value(prop, value)
+        no_output_reset_mode = 0
+        self.jsbsim.reset_to_initial_conditions(no_output_reset_mode)
+
+    def reset_with_initial_condition(self) -> None:
+        for prop, value in init_configuration['simulation']['initial_state'].items():
+            self.jsbsim.set_property_value(prop, value)
         no_output_reset_mode = 0
         self.jsbsim.reset_to_initial_conditions(no_output_reset_mode)
 

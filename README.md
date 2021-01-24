@@ -6,7 +6,7 @@ Bestehende Projekte zur Umsetzung dieses Projektziel sind zwar vorhanden, aber z
 
 Grundlage der Implementierung ist das folgenden Repository: https://github.com/Gor-Ren/gym-jsbsim
 
-genutzt wird das FDM JSBSim: https://github.com/JSBSim-Team/jsbsim
+genutzt wird das Flugdynamische Modell (FDM) JSBSim: https://github.com/JSBSim-Team/jsbsim
 
 
 # Ablauf der Installation
@@ -37,6 +37,34 @@ result = sim.run()
 while result and sim.jsbsim.get_sim_time() <= 3:
     print(sim.get_property_value('velocities/u-fps'))
 ```
+
+4. Struktur des gym-Wrappers
+
+a) die Schnittstelle zur Anbindung an JSBSim wird durch die Datei **simulation** bzw. die KLasse **Simulation** realisiert. Die folgenden Methoden sind implementiert:
+
+* run():
+das FDM (JSBSim) macht einen Zeitschritt.
+  
+* get_state()
+die 12 Zustandswerte des FDM werden zurück gegeben
+  
+* set_controls()
+der jeweilige Parameter des FDM wird gesetzt
+  
+b) die Klasse/Datei **Jsbsim_gym_environment_wrapper** ummantelt (Wrapper) die Simulation des FDM
+
+im Sinne der Struktur von openAI sind u. a. die Methoden: 
+
+* reset
+* step
+
+implementiert
+
+c) damit das FDM wie ein openAI-Environment genutzt werden kann, ist die Klasse Environment implementiert.
+
+Die Klasse wird innerhalb eines RL-Agenten instanziiert mit  
+
+
 
 
 
