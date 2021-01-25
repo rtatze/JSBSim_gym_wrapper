@@ -19,5 +19,5 @@ class PID_regler(object):
         errorPitchAngle = pitchAngleReference - pitchAngleCurrent
         elevatorCommand = errorPitchAngle * self.p_pitch - pitchAngleRateCurrent * self.d_pitch
         elevatorCommand = elevatorCommand + elevatorCurrent
-        elevatorCommand = np.clip(elevatorCommand, -1, 1) - 0.1
+        elevatorCommand = np.clip(elevatorCommand, -1, 1)
         return elevatorCommand
