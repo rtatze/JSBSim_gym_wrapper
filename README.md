@@ -40,7 +40,7 @@ while result and sim.jsbsim.get_sim_time() <= 3:
 
 4. Struktur des gym-Wrappers
 
-a) die Schnittstelle zur Anbindung an JSBSim wird durch die Datei **simulation** bzw. die KLasse **Simulation** realisiert. Die folgenden Methoden sind implementiert:
+a) die Schnittstelle zur Anbindung an JSBSim wird durch die Datei **simulation** bzw. die Klasse **Simulation** realisiert. Die folgenden Methoden sind implementiert:
 
 * run():
 das FDM (JSBSim) macht einen Zeitschritt.
@@ -48,8 +48,11 @@ das FDM (JSBSim) macht einen Zeitschritt.
 * get_state()
 die 12 Zustandswerte des FDM werden zurück gegeben
   
-* set_controls()
+* set_properties()
 der jeweilige Parameter des FDM wird gesetzt
+  
+* get_properties()
+der jeweilige Parameter des FDM wird gelesen
   
 b) die Klasse/Datei **Jsbsim_gym_environment_wrapper** ummantelt (Wrapper) die Simulation des FDM
 
@@ -59,10 +62,6 @@ im Sinne der Struktur von openAI sind u. a. die Methoden:
 * step
 
 implementiert
-
-c) damit das FDM wie ein openAI-Environment genutzt werden kann, ist die Klasse Environment implementiert.
-
-Die Klasse wird innerhalb eines RL-Agenten instanziiert mit  
 
 
 
