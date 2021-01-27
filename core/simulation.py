@@ -62,8 +62,11 @@ class Simulation(object):
         state_dict = dict(zip(state_keys, state_values))
         return state_dict
 
-    def set_controls(self, control_name, control_value):
+    def set_properties(self, control_name, control_value):
         self.jsbsim[control_name] = control_value
+
+    def get_properties(self, prop):
+        return self.jsbsim.get_property_value(prop)
 
     def run(self) -> bool:
         result = self.jsbsim.run()
