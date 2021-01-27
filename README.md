@@ -8,7 +8,27 @@ Grundlage der Implementierung ist das folgenden Repository: https://github.com/G
 
 genutzt wird das Flugdynamische Modell (FDM) JSBSim: https://github.com/JSBSim-Team/jsbsim
 
+# Beispiel
+Ein Beispiel liegt im `example` Ordner
+```
+import gym
+import numpy as np
+from gym_wrapper.jsbsimgymenvironmentwrapper import JsbsimGymEnvironmentWrapper
 
+configuration_path="../config/default_configuration.toml"
+
+env = JsbsimGymEnvironmentWrapper(configuration_path=configuration_path)
+
+throttle = 0
+time_step_sec = 0
+# while time_step <= in_seconds(minutes=2):
+while time_step_sec <= 30:
+    print("time_step_sec: ", time_step_sec)
+    env.render() # comment render() for faster training
+    state, rewards, dones, _ = env.step([np.array([throttle])],)
+    time_step_sec = state[-1]
+    print("state", state)
+```
 # Ablauf der Installation
 ###1. Installation JSBSim:
 Beschreibungen für verschiedene Rechnersystem (Windows, Mac, Linux) sind unter:<br>
@@ -42,8 +62,15 @@ while result and sim.get_sim_time() <= 3:
     print(sim.get_property_value('velocities/u-fps'))
 ```
 ### 5. Installation von JSBSim-gym-wrapper
+Klonen des https://github.com/rtatze/JSBSim_gym_wrapper repos:
+
 ```
-python3 -m pip install git+https://github.com/rtatze/JSBSim_gym_wrapper
+git clone https://github.com/rtatze/JSBSim_gym_wrapper
+```
+Installation des Paketes: (-e steht für editor mode)
+```
+cd JSBSIM_gym_wrapper
+python3 -m pip install -e .
 ```
 
 ### 6. Struktur des gym-Wrappers
