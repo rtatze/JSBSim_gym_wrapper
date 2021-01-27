@@ -24,7 +24,7 @@ if __name__ == "__main__":
                legend_label='theta', name='theta', color="green")
         p.line(df['u'].index.values, df['u'], line_width=2,
                legend_label='u', name='u', color="blue")
-        output_file("./tests/plot.html")
+        output_file("plot.html")
         save(p)
 
 
