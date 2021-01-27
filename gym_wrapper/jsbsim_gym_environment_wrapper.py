@@ -1,15 +1,18 @@
 import gym
 from typing import List, Tuple, Dict
 import numpy as np
+from core.aircraft import Aircraft
 from gym import spaces
 from core.simulation import Simulation
 
 class Jsbsim_gym_environment_wrapper(gym.Env):
     """Custom Environment that follows gym interface"""
     metadata = {'render.modes': ['human']}
-    def __init__(self):
+    def __init__(self, aircraft: Aircraft, sim_frequency_hz: float, custom_configuration_path: str):
         super(Jsbsim_gym_environment_wrapper, self).__init__()
-        self.sim = Simulation()
+        self.sim = Simulation(aircraft=aircraft,
+                              custom_configuration_path=custom_configuration_path,
+                              sim_frequency_hz=sim_frequency_hz)
         self._dimensions = 1
         self.action_space = spaces.Box(
             low=-0,

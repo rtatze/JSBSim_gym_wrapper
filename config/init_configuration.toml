@@ -5,7 +5,7 @@ title = 'configuration'
     agent_interaction_freq = 5 # Interaction Frequency in Herz
     aircraft = 'cessna172P'
 
-    path_jsbsim = '' ### lokal definieren
+    path_jsbsim = '' ### local definieren
 
     [simulation.initial_state]
         'ic/h-sl-ft' = 10000
