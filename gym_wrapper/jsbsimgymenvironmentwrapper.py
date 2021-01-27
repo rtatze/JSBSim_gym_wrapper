@@ -36,7 +36,7 @@ class JsbsimGymEnvironmentWrapper(gym.Env):
 
     def _getObs(self) -> np.ndarray:
         state = self.sim.get_state()
-        return np.array([state['u'], state['h']])
+        return np.array(list(state.values()))
 
     def _calcRewards(self) -> np.ndarray:
         rewAgent0 = 0
@@ -54,8 +54,6 @@ class JsbsimGymEnvironmentWrapper(gym.Env):
 
     def seed(self, seed=None) -> None:
         pass
-
-
 
 if __name__ == "__main__":
     env = JsbsimGymEnvironmentWrapper()

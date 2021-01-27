@@ -55,14 +55,15 @@ class Simulation(object):
         self.jsbsim.reset_to_initial_conditions(no_output_reset_mode)
 
     def get_state(self):
-        state_keys = ["u", "v", "w", "lat", "long", "h", "p", "q", "r", "phi", "theta", "psi"]
+        state_keys = ["u", "v", "w", "lat", "long", "h", "p", "q", "r", "phi", "theta", "psi", "time_step_sec"]
         state_values = [
             self.jsbsim.get_property_value('velocities/u-fps'), self.jsbsim.get_property_value('velocities/v-fps'), \
             self.jsbsim.get_property_value('velocities/w-fps'), self.jsbsim.get_property_value('position/lat-gc-deg'), \
             self.jsbsim.get_property_value('position/long-gc-deg'), self.jsbsim.get_property_value('position/h-sl-meters'), \
             self.jsbsim.get_property_value('velocities/p-rad_sec'), self.jsbsim.get_property_value('velocities/q-rad_sec'), \
             self.jsbsim.get_property_value('velocities/r-rad_sec'), self.jsbsim.get_property_value('attitude/phi-rad'), \
-            self.jsbsim.get_property_value('attitude/theta-rad'), self.jsbsim.get_property_value('attitude/psi-rad')
+            self.jsbsim.get_property_value('attitude/theta-rad'), self.jsbsim.get_property_value('attitude/psi-rad'),
+            self.jsbsim.get_sim_time()
         ]
         state_dict = dict(zip(state_keys, state_values))
         return state_dict
