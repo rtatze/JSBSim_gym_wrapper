@@ -1,13 +1,16 @@
+import importlib
+import os
 import time
 import jsbsim
 import toml
+from core.aircraft import Aircraft, cessna172P
 import sys
+
+from service import global_constants
+
 sys.path.append('..')
 sys.path.append('.')
-from core.aircraft import Aircraft, cessna172P
 
-INIT_CONFIGURATION_PATH = '../config/init_configuration.toml'
-init_configuration = toml.load(INIT_CONFIGURATION_PATH)
 
 class Simulation(object):
     """
@@ -18,23 +21,20 @@ class Simulation(object):
     LONGITUDINAL = 'longitudinal'
     FULL = 'full'
 
-    def __init__(self,
-                 sim_frequency_hz: float = init_configuration['simulation']['jsbsim_dt_hz'],
-                 aircraft: Aircraft = cessna172P,
-                 custom_configuration_path: str = INIT_CONFIGURATION_PATH):
-
-        custom_configuration = toml.load(custom_configuration_path)
-
-        self.jsbsim = jsbsim.FGFDMExec(custom_configuration['simulation']['path_jsbsim'])
+    def __init__(self, configuration_path: str = global_constants.DEFAULT_CONFIGURATION_PATH):
+        self.configuration = toml.load(os.path.expanduser(configuration_path))
+        self.jsbsim = jsbsim.FGFDMExec(os.path.expanduser(self.configuration['simulation']['path_jsbsim']))
         self.jsbsim.set_debug_level(0)
-        self.sim_dt = 1.0 / sim_frequency_hz
+        self.sim_dt = 1.0 / self.configuration['simulation']['jsbsim_dt_hz']
         self.wall_clock_dt = 0
+
+        aircraft = Aircraft(**self.configuration['simulation']['aircraft'])
         self.initialise(aircraft)
 
     def initialise(self, aircraft: Aircraft):
         self.load_model(aircraft.jsbsim_id)
         self.jsbsim.set_dt(self.sim_dt)
-        self.set_custom_initial_conditions(init_configuration)
+        self.set_custom_initial_conditions(self.configuration)
 
     def load_model(self, model_name: str) -> None:
         load_success = self.jsbsim.load_model(model_name)
@@ -49,7 +49,7 @@ class Simulation(object):
         self.jsbsim.reset_to_initial_conditions(no_output_reset_mode)
 
     def reset_with_initial_condition(self) -> None:
-        for prop, value in init_configuration['simulation']['initial_state'].items():
+        for prop, value in self.configuration['simulation']['initial_state'].items():
             self.jsbsim.set_property_value(prop, value)
         no_output_reset_mode = 0
         self.jsbsim.reset_to_initial_conditions(no_output_reset_mode)

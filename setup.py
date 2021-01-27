@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 
-setup(name='JSBSim_gym_wrapper',
+setup(name='jsbsim_gym_wrapper',
       version='0.1',
       description='A simple open ai wrapper for jsbsim (flight dynamics model)',
       url='https://github.com/rtatze/JSBSim_gym_wrapper',
