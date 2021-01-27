@@ -11,7 +11,10 @@ setup(name='JSBSim_gym_wrapper',
             'numpy',
             'gym',
             'matplotlib',
-            'jsbsim'
+            'jsbsim',
+            'bokeh',
+            'pandas',
+            'toml'
       ],
       packages=find_packages(),
       classifiers=[
