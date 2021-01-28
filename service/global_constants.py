@@ -1,0 +1,1 @@
+DEFAULT_CONFIGURATION_PATH = '../config/default_configuration.toml'

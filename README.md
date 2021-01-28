@@ -8,24 +8,48 @@ Grundlage der Implementierung ist das folgenden Repository: https://github.com/G
 
 genutzt wird das Flugdynamische Modell (FDM) JSBSim: https://github.com/JSBSim-Team/jsbsim
 
+# Beispiel
+Ein Beispiel liegt im `example` Ordner
+```
+import gym
+import numpy as np
+from gym_wrapper.jsbsimgymenvironmentwrapper import JsbsimGymEnvironmentWrapper
 
+configuration_path="../config/default_configuration.toml"
+
+env = JsbsimGymEnvironmentWrapper(configuration_path=configuration_path)
+
+throttle = 0
+time_step_sec = 0
+# while time_step <= in_seconds(minutes=2):
+while time_step_sec <= 30:
+    print("time_step_sec: ", time_step_sec)
+    env.render() # comment render() for faster training
+    state, rewards, dones, _ = env.step([np.array([throttle])],)
+    time_step_sec = state[-1]
+    print("state", state)
+```
 # Ablauf der Installation
-1. Installation JSBSim:
+###1. Installation JSBSim:
 Beschreibungen für verschiedene Rechnersystem (Windows, Mac, Linux) sind unter:<br>
    https://jsbsim-team.github.io/jsbsim-reference-manual/mypages/quickstart-building-the-program/
-  
- 
-2. Installation der Python Bibliothek jsbsim: <br>
+   
+###2. Installation der Python Bibliothek jsbsim:
+
 ```
 pip install jsbsim
 ```
 
+###3. Klonen von jsbsim: 
+```
+git clone https://github.com/JSBSim-Team/jsbsim
+```
 
-3. Testen der JSBSim-Umgebung
+###4. Testen der JSBSim-Umgebung
 ```
 import jsbsim
 
-path_jsbsim = '/Users/########/Programme/jsbsim-code' #an System anpassen.
+path_jsbsim = '/PFAD_ZU_JSBSIM_ORDNER/jsbsim' #an System anpassen.
 
 sim = jsbsim.FGFDMExec(path_jsbsim)
 sim.load_model('c172p')
@@ -34,11 +58,22 @@ print(sim.print_property_catalog())
 
 result = sim.run()
 
-while result and sim.jsbsim.get_sim_time() <= 3:
+while result and sim.get_sim_time() <= 3:
     print(sim.get_property_value('velocities/u-fps'))
 ```
+### 5. Installation von JSBSim-gym-wrapper
+Klonen des https://github.com/rtatze/JSBSim_gym_wrapper repos:
 
-4. Struktur des gym-Wrappers
+```
+git clone https://github.com/rtatze/JSBSim_gym_wrapper
+```
+Installation des Paketes: (-e steht für editor mode)
+```
+cd JSBSIM_gym_wrapper
+python3 -m pip install -e .
+```
+
+### 6. Struktur des gym-Wrappers
 
 a) die Schnittstelle zur Anbindung an JSBSim wird durch die Datei **simulation** bzw. die Klasse **Simulation** realisiert. Die folgenden Methoden sind implementiert:
 

@@ -3,9 +3,13 @@ title = 'configuration'
 [simulation]
     jsbsim_dt_hz = 50  # JSBSim integration frequency in Herz
     agent_interaction_freq = 5 # Interaction Frequency in Herz
-    aircraft = 'cessna172P'
+    path_jsbsim = '~/jsbsim' ### path to jsbsim folder
 
-    path_jsbsim = '' ### lokal definieren
+    [simulation.aircraft]
+        jsbsim_id='c172p'
+        flightgear_id='c172p'
+        name='Cessna172P'
+        cruise_speed_kts=120
 
     [simulation.initial_state]
         'ic/h-sl-ft' = 10000
