@@ -4,8 +4,6 @@ Das Projektziel ist, einen einfachen Wrapper für ein gym-Environment (openAI) z
 
 Bestehende Projekte zur Umsetzung dieses Projektziel sind zwar vorhanden, aber zum Teil zu komplex für einfache Prototypen.
 
-Grundlage der Implementierung ist das folgenden Repository: https://github.com/Gor-Ren/gym-jsbsim
-
 genutzt wird das Flugdynamische Modell (FDM) JSBSim: https://github.com/JSBSim-Team/jsbsim
 
 # Beispiel
@@ -26,7 +24,7 @@ while time_step_sec <= 30:
     print("time_step_sec: ", time_step_sec)
     env.render() # comment render() for faster training
     state, rewards, dones, _ = env.step([np.array([throttle])],)
-    time_step_sec = state[-1]
+    time_step_sec = env.sim.get_properties('simulation/sim-time-sec')
     print("state", state)
 ```
 # Ablauf der Installation

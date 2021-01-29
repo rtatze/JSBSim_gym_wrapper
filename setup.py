@@ -5,7 +5,7 @@ setup(name='jsbsim_gym_wrapper',
       version='0.1',
       description='A simple open ai wrapper for jsbsim (flight dynamics model)',
       url='https://github.com/rtatze/JSBSim_gym_wrapper',
-      author='Titze, Laurito',
+      author='',
       license='MIT',
       install_requires=[
             'numpy',

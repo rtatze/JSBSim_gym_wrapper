@@ -3,12 +3,13 @@ from typing import List, Tuple, Dict
 import numpy as np
 from gym import spaces
 from core.simulation import Simulation
-from service import global_constants
+
+import config
 
 class JsbsimGymEnvironmentWrapper(gym.Env):
     """Custom Environment that follows gym interface"""
     metadata = {'render.modes': ['human']}
-    def __init__(self, configuration_path: str=global_constants.DEFAULT_CONFIGURATION_PATH):
+    def __init__(self, configuration_path: str=config.DEFAULT_CONFIGURATION_PATH):
         super(JsbsimGymEnvironmentWrapper, self).__init__()
         self.sim = Simulation(configuration_path=configuration_path)
         self._dimensions = 1
@@ -32,13 +33,15 @@ class JsbsimGymEnvironmentWrapper(gym.Env):
     def step(self, actions: List[np.ndarray]) -> Tuple[np.ndarray, np.ndarray, np.ndarray, Dict]:
         self.sim.set_properties('fcs/throttle-cmd-norm', actions[0])
         self.sim.run()
-        return self._getObs(), self._calcRewards(), self._calcDones(), {}
+        observation = self._getObs()
+        reward = self._calcRewards(observation)
+        return observation, reward, self._calcDones(), {}
 
     def _getObs(self) -> np.ndarray:
         state = self.sim.get_state()
         return np.array(list(state.values()))
 
-    def _calcRewards(self) -> np.ndarray:
+    def _calcRewards(self, observation) -> np.ndarray:
         rewAgent0 = 0
         return np.array([rewAgent0], dtype=np.float32)
 

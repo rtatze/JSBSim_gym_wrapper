@@ -1,7 +1,6 @@
 numpy==1.19.5
-pandas==1.1.5
+pandas==1.2.1
 bokeh==2.2.3
 toml==0.10.2
-JSBSim==1.1.3
-gym==
-pillow==
+JSBSim==1.1.4
+gym==0.18.0

@@ -6,7 +6,7 @@ import toml
 from core.aircraft import Aircraft, cessna172P
 import sys
 
-from service import global_constants
+import config
 
 sys.path.append('..')
 sys.path.append('.')
@@ -21,7 +21,7 @@ class Simulation(object):
     LONGITUDINAL = 'longitudinal'
     FULL = 'full'
 
-    def __init__(self, configuration_path: str = global_constants.DEFAULT_CONFIGURATION_PATH):
+    def __init__(self, configuration_path: str = config.DEFAULT_CONFIGURATION_PATH):
         self.configuration = toml.load(os.path.expanduser(configuration_path))
         self.jsbsim = jsbsim.FGFDMExec(os.path.expanduser(self.configuration['simulation']['path_jsbsim']))
         self.jsbsim.set_debug_level(0)
@@ -55,15 +55,14 @@ class Simulation(object):
         self.jsbsim.reset_to_initial_conditions(no_output_reset_mode)
 
     def get_state(self):
-        state_keys = ["u", "v", "w", "lat", "long", "h", "p", "q", "r", "phi", "theta", "psi", "time_step_sec"]
+        state_keys = ["u", "v", "w", "lat", "long", "h", "p", "q", "r", "phi", "theta", "psi"]
         state_values = [
             self.jsbsim.get_property_value('velocities/u-fps'), self.jsbsim.get_property_value('velocities/v-fps'), \
             self.jsbsim.get_property_value('velocities/w-fps'), self.jsbsim.get_property_value('position/lat-gc-deg'), \
             self.jsbsim.get_property_value('position/long-gc-deg'), self.jsbsim.get_property_value('position/h-sl-meters'), \
             self.jsbsim.get_property_value('velocities/p-rad_sec'), self.jsbsim.get_property_value('velocities/q-rad_sec'), \
             self.jsbsim.get_property_value('velocities/r-rad_sec'), self.jsbsim.get_property_value('attitude/phi-rad'), \
-            self.jsbsim.get_property_value('attitude/theta-rad'), self.jsbsim.get_property_value('attitude/psi-rad'),
-            self.jsbsim.get_sim_time()
+            self.jsbsim.get_property_value('attitude/theta-rad'), self.jsbsim.get_property_value('attitude/psi-rad')
         ]
         state_dict = dict(zip(state_keys, state_values))
         return state_dict
