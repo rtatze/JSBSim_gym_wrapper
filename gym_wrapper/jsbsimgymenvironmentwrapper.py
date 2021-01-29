@@ -3,15 +3,18 @@ from typing import List, Tuple, Dict
 import numpy as np
 from gym import spaces
 from core.simulation import Simulation
+import os
+import toml
 
 import config
 
 class JsbsimGymEnvironmentWrapper(gym.Env):
     """Custom Environment that follows gym interface"""
     metadata = {'render.modes': ['human']}
-    def __init__(self, configuration_path: str=config.DEFAULT_CONFIGURATION_PATH):
+    def __init__(self, configuration_file: str=config.DEFAULT_CONFIGURATION_FILE):
         super(JsbsimGymEnvironmentWrapper, self).__init__()
-        self.sim = Simulation(configuration_path=configuration_path)
+        self.configuration = toml.load(os.path.expanduser(configuration_file))
+        self.sim = Simulation(configuration_file=configuration_file)
         self._dimensions = 1
         self.action_space = spaces.Box(
             low=-0,
@@ -25,6 +28,7 @@ class JsbsimGymEnvironmentWrapper(gym.Env):
             shape=self._getObs().shape,  # Passt sich damit automatisch an die Beobachtung an
             dtype=np.float32
         )
+        self.sim_steps = self.configuration['simulation']['agent_interaction_freq']
 
     def reset(self):
         self.sim.reset_with_initial_condition()
@@ -32,7 +36,8 @@ class JsbsimGymEnvironmentWrapper(gym.Env):
 
     def step(self, actions: List[np.ndarray]) -> Tuple[np.ndarray, np.ndarray, np.ndarray, Dict]:
         self.sim.set_properties('fcs/throttle-cmd-norm', actions[0])
-        self.sim.run()
+        for _ in range(self.sim_steps):
+            self.sim.run()
         observation = self._getObs()
         reward = self._calcRewards(observation)
         return observation, reward, self._calcDones(), {}

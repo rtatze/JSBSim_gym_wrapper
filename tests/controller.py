@@ -4,7 +4,7 @@ import pandas as pd
 from bokeh.plotting import figure, output_file, save
 from _datetime import datetime
 
-from service import pid_regler
+from services import pid_regler
 
 if __name__ == "__main__":
     pid = pid_regler.PID_regler()

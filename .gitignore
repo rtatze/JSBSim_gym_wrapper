@@ -1,3 +1,4 @@
 *.egg*
 .idea
 venv
+/tests/plot.html

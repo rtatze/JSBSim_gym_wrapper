@@ -7,7 +7,7 @@ COPY ./config /
 COPY ./core /
 COPY ./gym_wrapper /
 COPY ./lokal_config /
-COPY ./service /
+COPY services /
 COPY ./tests /
 
 RUN pip install -r requirements.txt

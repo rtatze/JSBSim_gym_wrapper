@@ -21,8 +21,8 @@ class Simulation(object):
     LONGITUDINAL = 'longitudinal'
     FULL = 'full'
 
-    def __init__(self, configuration_path: str = config.DEFAULT_CONFIGURATION_PATH):
-        self.configuration = toml.load(os.path.expanduser(configuration_path))
+    def __init__(self, configuration_file: str = config.DEFAULT_CONFIGURATION_FILE):
+        self.configuration = toml.load(os.path.expanduser(configuration_file))
         self.jsbsim = jsbsim.FGFDMExec(os.path.expanduser(self.configuration['simulation']['path_jsbsim']))
         self.jsbsim.set_debug_level(0)
         self.sim_dt = 1.0 / self.configuration['simulation']['jsbsim_dt_hz']

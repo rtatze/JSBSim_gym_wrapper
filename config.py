@@ -1,1 +1,1 @@
-DEFAULT_CONFIGURATION_PATH = '../config/default_configuration.toml'
+DEFAULT_CONFIGURATION_FILE = '../config/default_configuration.toml'

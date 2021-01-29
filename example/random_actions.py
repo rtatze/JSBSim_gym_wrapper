@@ -4,7 +4,7 @@ from gym_wrapper.jsbsimgymenvironmentwrapper import JsbsimGymEnvironmentWrapper
 
 configuration_path="../config/default_configuration.toml"
 
-env = JsbsimGymEnvironmentWrapper(configuration_path=configuration_path)
+env = JsbsimGymEnvironmentWrapper(configuration_file=configuration_path)
 
 throttle = 0
 time_step_sec = 0

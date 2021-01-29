@@ -2,7 +2,7 @@ title = 'configuration'
 
 [simulation]
     jsbsim_dt_hz = 50  # JSBSim integration frequency in Herz
-    agent_interaction_freq = 5 # Interaction Frequency in Herz
+    agent_interaction_freq = 5 # sim steps per Interaction
     path_jsbsim = '~/Programme/jsbsim-code' ### path to jsbsim folder
 
     [simulation.aircraft]
