@@ -102,3 +102,14 @@ implementiert
 
 
 # Erstellen eines Docker-Images
+
+
+# Cite as:
+@misc{Titze2021,
+  author = {Titze, Rene},
+  title = {JSBSim_wrapper},
+  year = {2021},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/rtatze/JSBSim_gym_wrapper}}
+}
