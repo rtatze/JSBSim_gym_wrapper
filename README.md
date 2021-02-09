@@ -4,10 +4,27 @@ Das Projektziel ist, einen einfachen Wrapper für ein gym-Environment (openAI) z
 
 Bestehende Projekte zur Umsetzung dieses Projektziel sind zwar vorhanden, aber zum Teil zu komplex für einfache Prototypen.
 
-genutzt wird das Flugdynamische Modell (FDM) JSBSim: https://github.com/JSBSim-Team/jsbsim
+Grundlage der Implementierung ist das folgenden Repository: [gym-jsbsim](https://github.com/Gor-Ren/gym-jsbsim)
+
+Description: [Working-Paper](https://www.researchgate.net/publication/349039926_Working_Paper_Configuration_and_use_of_the_flight_dynamic_model_-_JSBSim_-_as_a_reinforcement_learning_environment)
 
 # Beispiel
 Ein Beispiel liegt im `example` Ordner
+
+<!-- TOC -->
+
+- [Beispiel](#beispiel)
+- [Ablauf der Installation](#ablauf-der-installation)
+    - [Installation JSBSim:](#installation-jsbsim)
+    - [Installation der Python Bibliothek jsbsim:](#installation-der-python-bibliothek-jsbsim)
+    - [Klonen von jsbsim:](#klonen-von-jsbsim)
+    - [Testen der JSBSim-Umgebung](#testen-der-jsbsim-umgebung)
+    - [Installation von JSBSim-gym-wrapper](#installation-von-jsbsim-gym-wrapper)
+    - [Struktur des gym-Wrappers](#struktur-des-gym-wrappers)
+- [Erstellen eines Docker-Images](#erstellen-eines-docker-images)
+
+<!-- /TOC -->
+
 ```
 import gym
 import numpy as np
@@ -28,22 +45,23 @@ while time_step_sec <= 30:
     print("state", state)
 ```
 # Ablauf der Installation
-###1. Installation JSBSim:
+### 1. Installation JSBSim:
+
 Beschreibungen für verschiedene Rechnersystem (Windows, Mac, Linux) sind unter:<br>
    https://jsbsim-team.github.io/jsbsim-reference-manual/mypages/quickstart-building-the-program/
    
-###2. Installation der Python Bibliothek jsbsim:
+### 2. Installation der Python Bibliothek jsbsim:
 
 ```
 pip install jsbsim
 ```
 
-###3. Klonen von jsbsim: 
+### 3. Klonen von jsbsim: 
 ```
 git clone https://github.com/JSBSim-Team/jsbsim
 ```
 
-###4. Testen der JSBSim-Umgebung
+### 4. Testen der JSBSim-Umgebung
 ```
 import jsbsim
 
@@ -60,7 +78,7 @@ while result and sim.get_sim_time() <= 3:
     print(sim.get_property_value('velocities/u-fps'))
 ```
 ### 5. Installation von JSBSim-gym-wrapper
-Klonen des https://github.com/rtatze/JSBSim_gym_wrapper repos:
+Klonen des [JSBSim_gym_wrapper](https://github.com/rtatze/JSBSim_gym_wrapper) repos:
 
 ```
 git clone https://github.com/rtatze/JSBSim_gym_wrapper
@@ -104,7 +122,7 @@ implementiert
 # Erstellen eines Docker-Images
 
 
-# Cite as:
+Cite as:
 @misc{Titze2021,
   author = {Titze, Rene},
   title = {JSBSim_wrapper},
