@@ -1,15 +1,12 @@
 # Flugdynamisches Modell (FDM) als gym-Environment mit JSBSim
 
-Das Projektziel ist, einen einfachen Wrapper für ein gym-Environment (openAI) zu implementieren.
+Das Projektziel ist es, einen einfachen Wrapper für ein gym-Environment (openAI) zu implementieren.
 
-Bestehende Projekte zur Umsetzung dieses Projektziel sind zwar vorhanden, aber zum Teil zu komplex für einfache Prototypen.
+Bestehende Projekte zur Umsetzung dieses Projektziels sind zwar vorhanden, aber zum Teil zu komplex für einfache Prototypen.
 
-Grundlage der Implementierung ist das folgenden Repository: [gym-jsbsim](https://github.com/Gor-Ren/gym-jsbsim)
+Grundlage der Implementierung ist das flugdynamische Modell aus folgendem Repository: [gym-jsbsim](https://github.com/Gor-Ren/gym-jsbsim)
 
 Description: [Working-Paper](https://www.researchgate.net/publication/349039926_Working_Paper_Configuration_and_use_of_the_flight_dynamic_model_-_JSBSim_-_as_a_reinforcement_learning_environment)
-
-# Beispiel
-Ein Beispiel liegt im `example` Ordner
 
 <!-- TOC -->
 
@@ -24,6 +21,9 @@ Ein Beispiel liegt im `example` Ordner
 - [Erstellen eines Docker-Images](#erstellen-eines-docker-images)
 
 <!-- /TOC -->
+# Beispiel
+
+Folgendes Beispiel zeigt eine einfache Implementierung eines Random-Agent
 
 ```
 import gym
@@ -47,8 +47,9 @@ while time_step_sec <= 30:
 # Ablauf der Installation
 ### 1. Installation JSBSim:
 
-Beschreibungen für verschiedene Rechnersystem (Windows, Mac, Linux) sind unter:<br>
-   https://jsbsim-team.github.io/jsbsim-reference-manual/mypages/quickstart-building-the-program/
+Beschreibungen für verschiedene Rechnersystem (Windows, Mac, Linux) sind unter:
+<br>
+   [jsbsim: quickstart-building-the-program](https://jsbsim-team.github.io/jsbsim-reference-manual/mypages/quickstart-building-the-program/)
    
 ### 2. Installation der Python Bibliothek jsbsim:
 
