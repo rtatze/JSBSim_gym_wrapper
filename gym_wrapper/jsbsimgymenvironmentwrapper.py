@@ -32,7 +32,9 @@ class JsbsimGymEnvironmentWrapper(gym.Env):
 
     def reset(self):
         self.sim.reset_with_initial_condition()
-        return self._getObs(), self._calcRewards(), self._calcDones(), {}
+        observation = self._getObs()
+        reward = self._calcRewards(observation)
+        return observation, reward, self._calcDones(), {}
 
     def step(self, actions: List[np.ndarray]) -> Tuple[np.ndarray, np.ndarray, np.ndarray, Dict]:
         self.sim.set_properties('fcs/throttle-cmd-norm', actions[0])
