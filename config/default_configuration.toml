@@ -6,17 +6,24 @@ title = 'configuration'
     path_jsbsim = '~/Programme/jsbsim-code' ### path to jsbsim folder
 
     [simulation.aircraft]
-        jsbsim_id='c172p'
-        flightgear_id='c172p'
-        name='Cessna172P'
+        jsbsim_id='c172r'
+        flightgear_id='c172r'
+        name='Cessna172r'
         cruise_speed_kts=120
+
+        #jsbsim_id='A320'
+        #flightgear_id='A320-211'
+        #name='A320'
+        #cruise_speed_kts=490
+
 
     [simulation.initial_state]
         'ic/h-sl-ft' = 10000
-        'ic/u-fps' = 120
+        'ic/u-fps' = 102
         'ic/terrain-elevation-ft' = 0.00001
         'ic/psi-true-deg' = 270
 
     [simulation.start_conditions]
         'propulsion/engine/set-running' = 1
+        'propulsion/starter_cmd' = 1
 
