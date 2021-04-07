@@ -54,7 +54,7 @@ class Simulation(object):
         no_output_reset_mode = 0
         self.jsbsim.reset_to_initial_conditions(no_output_reset_mode)
 
-    def get_state(self):
+    def get_state(self) -> dict:
         state_keys = ["u", "v", "w", "lat", "long", "h", "p", "q", "r", "phi", "theta", "psi"]
         state_values = [
             self.jsbsim.get_property_value('velocities/u-fps'), self.jsbsim.get_property_value('velocities/v-fps'), \

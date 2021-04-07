@@ -1,9 +1,11 @@
 import numpy as np
+import random
 from gym_wrapper.jsbsimgymenvironmentwrapper import JsbsimGymEnvironmentWrapper
 
 configuration_path="../config/default_configuration.toml"
 
 env = JsbsimGymEnvironmentWrapper(configuration_file=configuration_path)
+
 
 time_step_sec = 0
 env.reset()

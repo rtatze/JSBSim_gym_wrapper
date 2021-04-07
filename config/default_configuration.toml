@@ -6,10 +6,10 @@ title = 'configuration'
     path_jsbsim = '~/Programme/jsbsim-code' ### path to jsbsim folder
 
     [simulation.aircraft]
-        jsbsim_id='c172r'
-        flightgear_id='c172r'
-        name='Cessna172r'
-        cruise_speed_kts=120
+        jsbsim_id='c172p'
+        flightgear_id='c172p'
+        name='Cessna172p'
+        cruise_speed_kts = 120
 
         #jsbsim_id='A320'
         #flightgear_id='A320-211'

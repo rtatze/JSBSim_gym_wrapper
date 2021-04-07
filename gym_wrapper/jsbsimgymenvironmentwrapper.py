@@ -38,7 +38,7 @@ class JsbsimGymEnvironmentWrapper(gym.Env):
 
     def step(self, actions: List[np.ndarray]) -> Tuple[np.ndarray, np.ndarray, np.ndarray, Dict]:
         for _ in range(self.sim_steps):
-            self.sim.set_properties('fcs/throttle-cmd-norm', actions[0])
+            self.sim.set_properties('fcs/elevator-cmd-norm', actions[0])
             self.sim.run()
         observation = self._getObs()
         reward = self._calcRewards(observation)
