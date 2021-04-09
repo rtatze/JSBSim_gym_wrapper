@@ -34,7 +34,7 @@ class JsbsimGymEnvironmentWrapper(gym.Env):
         self.sim.reset_with_initial_condition()
         observation = self._getObs()
         reward = self._calcRewards(observation)
-        return observation, reward, self._calcDones(), {}
+        return observation
 
     def step(self, actions: List[np.ndarray]) -> Tuple[np.ndarray, np.ndarray, np.ndarray, Dict]:
         for _ in range(self.sim_steps):
