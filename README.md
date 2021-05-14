@@ -25,7 +25,7 @@ Description: [Working-Paper](https://www.researchgate.net/publication/349039926_
 
 Folgendes Beispiel zeigt eine einfache Implementierung eines Random-Agent
 
-```
+```Python
 import gym
 import numpy as np
 from gym_wrapper.jsbsimgymenvironmentwrapper import JsbsimGymEnvironmentWrapper
@@ -63,7 +63,7 @@ git clone https://github.com/JSBSim-Team/jsbsim
 ```
 
 ### 4. Testen der JSBSim-Umgebung
-```
+```Python
 import jsbsim
 
 path_jsbsim = '/PFAD_ZU_JSBSIM_ORDNER/jsbsim' #an System anpassen.
@@ -115,13 +115,56 @@ im Sinne der Struktur von openAI sind u. a. die Methoden:
 
 implementiert
 
+Gute Referenzen:
 
+https://github.com/JSBSim-Team/jsbsim-reference-manual/blob/master/docs/_mypages/Jupyter_Notebooks/python/property_map.py
 
 
 
 
 # Erstellen eines Docker-Images
 
+es werden 2 Dockerfiles vorgestellt. Mit dem ersten Dockerfile wird die Basis für ein Image des JSBSim_gym_wrapper 
+erstellt. Das zweite Dockerfile zeigt eine Beipsielausführung eines Tests.
+
+1. Dockerfile für die Basis
+```dockerfile
+# aufbauend auf einem Linux-Image mit Python
+FROM python:latest
+
+# JSBSim wird in ein zusätzliches Verzeichnis kopiert
+RUN mkdir -p ${CODE_DIR}/JSBSim_gym_wrapper
+RUN git clone https://github.com/JSBSim-Team/jsbsim.git
+
+# das gesamte Verzeichnis und Abhängigkeiten werden in das Image kopiert
+ADD . ${CODE_DIR}/JSBSim_gym_wrapper
+RUN pip install -e ./JSBSim_gym_wrapper
+
+# das Arbeitsverzeichnis ist root
+WORKDIR ${CODE_DIR}/JSBSim_gym_wrapper
+RUN echo "$PWD"
+```
+erstellt wird das Image: JSBSim_Basis
+
+
+2. Dockerfile für eine Beispielanwendung auf Basis des oben (unter 1) erstellten Images:
+```dockerfile
+# aufbauend auf dem Basis-Image
+FROM jsbsim_basis:latest
+
+# wechsel in das Verzeichnis mit dem Beipsiel:
+WORKDIR ${CODE_DIR}/JSBSim_gym_wrapper/example
+
+# Ausführung der Beipsielanwendung
+CMD [ "python", "random_actions.py" ]
+```
+
+ACHTUNG: da nun der JSBSim-Code im Image innerhalb des Verzeichnisses jsbsim liegt, muss die Configuration geändert werden:
+
+```Python
+#path_jsbsim = '~/Programme/jsbsim-code' ### path to jsbsim folder
+path_jsbsim = '../jsbsim' # Für Dockercontainer
+```
 
 Cite as:
 @misc{Titze2021,
