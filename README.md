@@ -123,7 +123,7 @@ https://github.com/JSBSim-Team/jsbsim-reference-manual/blob/master/docs/_mypages
 
 
 # Erstellen eines Docker-Images
-
+(nach afaehnrich)
 es werden 2 Dockerfiles vorgestellt. Mit dem ersten Dockerfile wird die Basis für ein Image des JSBSim_gym_wrapper 
 erstellt. Das zweite Dockerfile zeigt eine Beipsielausführung eines Tests.
 
@@ -133,7 +133,8 @@ erstellt. Das zweite Dockerfile zeigt eine Beipsielausführung eines Tests.
 FROM python:latest
 
 # JSBSim wird in ein zusätzliches Verzeichnis kopiert
-RUN mkdir -p ${CODE_DIR}/JSBSim_gym_wrapper
+RUN mkdir -p ${CODE_DIR}/JSBSim_gym_wrapper/jsbsim
+WORKDIR ${CODE_DIR}/JSBSim_gym_wrapper/jsbsim
 RUN git clone https://github.com/JSBSim-Team/jsbsim.git
 
 # das gesamte Verzeichnis und Abhängigkeiten werden in das Image kopiert
