@@ -122,7 +122,7 @@ https://github.com/JSBSim-Team/jsbsim-reference-manual/blob/master/docs/_mypages
 
 
 
-# Erstellen eines Docker-Images
+# Erstellen eines Docker-Images (Thanks to: afaehnrich)
 
 es werden 2 Dockerfiles vorgestellt. Mit dem ersten Dockerfile wird die Basis für ein Image des JSBSim_gym_wrapper 
 erstellt. Das zweite Dockerfile zeigt eine Beipsielausführung eines Tests.
