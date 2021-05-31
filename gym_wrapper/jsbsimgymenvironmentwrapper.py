@@ -23,20 +23,19 @@ class JsbsimGymEnvironmentWrapper(gym.Env):
             dtype=np.float32
         )
         self.observation_space = spaces.Box(
-            low=np.inf,
+            low=-np.inf,
             high=np.inf,
-            shape=self._getObs().shape,  # Passt sich damit automatisch an die Beobachtung an
+            shape=(self._getObs().shape[0],),
             dtype=np.float32
         )
         self.sim_steps = self.configuration['simulation']['agent_interaction_freq']
 
-    def reset(self):
+    def reset(self) -> object:
         self.sim.reset_with_initial_condition()
         observation = self._getObs()
-        reward = self._calcRewards(observation)
         return observation
 
-    def step(self, actions: List[np.ndarray]) -> Tuple[np.ndarray, np.ndarray, np.ndarray, Dict]:
+    def step(self, actions: List[np.ndarray]) -> Tuple[object, float, bool, dict]:
         for _ in range(self.sim_steps):
             self.sim.set_properties('fcs/elevator-cmd-norm', actions[0])
             self.sim.run()
@@ -45,15 +44,15 @@ class JsbsimGymEnvironmentWrapper(gym.Env):
         return observation, reward, self._calcDones(), {}
 
     def _getObs(self) -> np.ndarray:
-        state = self.sim.get_state()
-        return np.array(list(state.values()))
+        state = list(self.sim.get_state().values())
+        return np.array(state)
 
-    def _calcRewards(self, observation) -> np.ndarray:
+    def _calcRewards(self, observation) -> float:
         rewAgent0 = 0
-        return np.array([rewAgent0], dtype=np.float32)
+        return rewAgent0
 
-    def _calcDones(self) -> np.ndarray:
-        dones = np.zeros(1)
+    def _calcDones(self) -> bool:
+        dones = False
         return dones
 
     def render(self, mode='human'):
